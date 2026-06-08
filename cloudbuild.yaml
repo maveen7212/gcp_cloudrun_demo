@@ -3,13 +3,13 @@ steps:
   args:
     - 'build'
     - '-t'
-    - 'asia-south1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
+    - 'us-central1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
     - '.'
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
     - 'push'
-    - 'asia-south1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
+    - 'us-central1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
