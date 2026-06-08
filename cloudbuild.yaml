@@ -1,26 +1,23 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
-    - 'build'
-    - '-t'
-    - 'us-central1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
-    - '.'
+    - build
+    - -t
+    - us-central1-docker.pkg.dev/$PROJECT_ID/myrepo/my-python-app:$SHORT_SHA
+    - .
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
-    - 'push'
-    - 'us-central1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
+    - push
+    - us-central1-docker.pkg.dev/$PROJECT_ID/myrepo/my-python-app:$SHORT_SHA
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args:
-    - 'run'
-    - 'deploy'
-    - 'my-python-app'
-    - '--image=us-central1-docker.pkg.dev/project-77158318-bf9d-4d5d-bcc/myrepo/my-python-app:latest'
-    - '--region=us-central1'
-    - '--platform=managed'
-    - '--allow-unauthenticated'
-
-options:
-  logging: CLOUD_LOGGING_ONLY
+    - run
+    - deploy
+    - my-python-app
+    - --image=us-central1-docker.pkg.dev/$PROJECT_ID/myrepo/my-python-app:$SHORT_SHA
+    - --region=us-central1
+    - --platform=managed
+    - --allow-unauthenticated
