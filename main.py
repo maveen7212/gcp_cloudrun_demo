@@ -1,7 +1,32 @@
 from flask import Flask
+from google.cloud import bigquery
+
 app = Flask(__name__)
-@app.route('/')
+
+client = bigquery.Client()
+
+@app.route("/")
 def home():
-    return "deployment success"
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080)
+    return "Cloud Run is running"
+
+@app.route("/load")
+def load_data():
+
+    uri = "gs://sale-data-bkt/sales.txt"
+
+    job_config = bigquery.LoadJobConfig(
+        source_format=bigquery.SourceFormat.CSV,
+        skip_leading_rows=1,
+        autodetect=True
+    )
+
+    load_job = client.load_table_from_uri(
+        uri,
+        "project-77158318-bf9d-4d5d-bcc.gcp_project.sales_data",
+        job_config=job_config
+    )
+
+
+    load_job.result()
+
+    return "Data Loaded  gcs to bigquery" 
